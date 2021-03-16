@@ -10,7 +10,7 @@ cloudinary.config({
 module.exports = {
   UploadImage(req, res) {
     cloudinary.uploader.upload(req.body.image, async result => {
-      console.log(result);
+      // console.log(result);
 
       await User.update(
         {
@@ -33,4 +33,24 @@ module.exports = {
         );
     });
   },
+
+  async SetDefaultImage(req, res) {
+    const { imgId, imgVersion } = req.params;
+
+    await User.update(
+      {
+        _id: req.user._id,
+      },
+      {
+        picId: imgId,
+        picVersion: imgVersion
+      }
+    )
+      .then(() =>
+        res.status(200).json({ message: "Default image set" })
+      )
+      .catch((err) =>
+        res.status(500).json({ message: "Error Occured" })
+      );
+  }
 };

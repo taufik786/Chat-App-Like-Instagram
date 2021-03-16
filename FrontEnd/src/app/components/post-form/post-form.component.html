@@ -2,7 +2,7 @@
   <div class="col s12 m12 l10">
     <div class="card postDiv">
       <div class="card-content">
-        <form [formGroup]="postForm" noValidate (ngSubmit)="submitPost()">
+        <form [formGroup]="postForm" noValidate (ngSubmit)="SubmitPost()">
           <div class="formDiv">
             <textarea id="textarea1" class="materialize-textarea" formControlName="post"></textarea>
               <div class="file-field input-field">
@@ -13,7 +13,7 @@
                         <i class="material-icons">image</i>
                         Image
                       </span>
-                      <input type="file">
+                      <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="OnFileSelected($event)">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">

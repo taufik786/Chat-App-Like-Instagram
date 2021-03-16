@@ -1,16 +1,16 @@
 <ul class="collection col s12 m12 l10" *ngFor="let post of posts">
   <li class="collection-item avatar">
-    <img src="http://placehold.it/50x50" alt="" class="circle">
+    <img src="https://res.cloudinary.com/taufikcloud/image/upload/v{{post.user.picVersion}}/{{post.user.picId}}" alt="" class="circle">
     <span class="title">{{post.username}}</span>
     <p class="time">{{TimeFromNow(post.created)}}
-      <!-- <br> Country -->
+      <br>@{{post.user.city}}, {{post.user.country}}
     </p>
   </li>
   <div class="row">
     <div class="col s12">
       <div class="card">
-        <div class="card-image">
-          <!-- <img class="postImage" src="../../../assets/images/logo.png" alt=""> -->
+        <div class="card-image" *ngIf="post.imgId">
+          <img class="postImage" src="https://res.cloudinary.com/taufikcloud/image/upload/v{{post.imgVersion}}/{{post.imgId}}">
         </div>
         <div class="card-content">
           <p>{{post.post}} </p>

@@ -11,7 +11,7 @@
           <div class="file-field input-field">
             <div class="btn">
               <span>File</span>
-              <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+              <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="OnFileSelected($event)">
             </div>
             <div class="file-path-wrapper">
               <input id="filePath" class="file-path validate" type="text">
@@ -20,7 +20,7 @@
         </div>
         <div class="col s6">
           <div class="file-field input-field">
-            <a class="waves-effect waves-light btn" (click)="upload()"><i class="material-icons left">image</i>Upload Image</a>
+            <a class="waves-effect waves-light btn" (click)="Upload()"><i class="material-icons left">image</i>Upload Image</a>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
         <div class="col s12 m6 l4" *ngFor="let image of images">
           <div class="item-img-wrap imgDiv">
             <img src="https://res.cloudinary.com/taufikcloud/image/upload/v{{image.imgVersion}}/{{image.imgId}}" class="imgCircle">
-            <button class="btn imgBtn">Set As Profile</button>
+            <button class="btn imgBtn" (click)="SetProfileImage(image)">Set As Profile</button>
           </div>
         </div>
       </div>

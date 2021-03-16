@@ -94,7 +94,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
   }
   MarkAll(){
     this.userService.MarkAllAsRead().subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.socket.emit('refresh', {});
 
 

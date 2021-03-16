@@ -8,7 +8,7 @@
           <span class="nav-label-icon" *ngIf="count.length > 0">{{count.length}} </span>
           <ul id="dropdown" class="dropdown-content col s12 collection">
             <li class="collection-item avatar" *ngFor="let data of notifications">
-              <img src="http://placehold.it/50x50" class="circle">
+              <img src="https://res.cloudinary.com/taufikcloud/image/upload/v{{data.senderId.picVersion}}/{{data.senderId.picId}}" class="circle">
               <span [ngClass]="data.read ? 'isRead' : 'unread'">{{data.message}} </span>
               <p class="time">{{TimeFromNow(data.created)}} </p>
             </li>
@@ -27,7 +27,7 @@
           <span class="nav-label-icon" *ngIf="msgNumber > 0">{{msgNumber}} </span>
           <ul id="dropdown1" class="dropdown-content col s12 collection">
             <li class="collection-item avatar" *ngFor="let chat of chatList" (click)="GotToChatPage(chat.receiverId.username)">
-              <img src="http://placehold.it/50x50" class="circle">
+              <img src="https://res.cloudinary.com/taufikcloud/image/upload/v{{chat.receiverId.picVersion}}/{{chat.receiverId.picId}}" class="circle">
               <span class="title">
                 {{chat.receiverId.username}}
                 <a class="secondary-content">

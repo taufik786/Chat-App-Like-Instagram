@@ -11,9 +11,9 @@
       <div class="row">
         <div class="col s12 m6 l4 cardDiv" *ngFor="let user of users">
           <div class="card">
-            <a>
+            <a  (click)="ViewUser(user)">
               <div class="card-image imgDiv">
-                <img class="imgCircle responsive-img" src="http://placehold.it/100x100" alt="">
+                <img class="imgCircle responsive-img" src="https://res.cloudinary.com/taufikcloud/image/upload/v{{user.picVersion}}/{{user.picId}}" alt="">
               </div>
             </a>
             <div class="card-action">
@@ -21,6 +21,7 @@
                 {{user.username}}
                 <i class="fa fa-circle" *ngIf="checkIfOnline(user.username)"></i>
               </h3>
+              <p *ngIf="user.city">{{user.city}}, {{user.country}} </p>
 
               <button class="btn" *ngIf="!checkInArray(userArr, user._id)" (click)="FollowUser(user)">Follow</button>
 
