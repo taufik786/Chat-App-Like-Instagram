@@ -25,7 +25,6 @@ module.exports = {
         });
 
         let {error, value} = schema.validate(req.body);
-        // console.log(value);
         if (error && error.details) {
             return res.status(500).json( {msg: error.details })
             
@@ -97,7 +96,7 @@ module.exports = {
             })
         })
         .catch( err => {
-            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            return res.status(500).json({
                 message: 'Error Occured'
             })
         })
