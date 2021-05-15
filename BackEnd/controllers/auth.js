@@ -82,7 +82,7 @@ module.exports = {
                     message: 'Username not found'
                 })
             }
-            return bcrypt.compare(req.body.password, user.password).then((result) => {
+            return bcrypt.compare(req.body.password, user.password).then(result => {
                 if(!result){
                     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
                         message: 'Password is incorrect'

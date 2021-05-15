@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const cloudinary = require("cloudinary");
 const moment = require("moment");
-const request = require('request');
+const request = require("request");
 
 cloudinary.config({
   cloud_name: "taufikcloud",
@@ -104,26 +104,32 @@ module.exports = {
         .populate("user")
         .sort({ created: -1 });
 
-      const top = await Post.find({ totalLikes: { $gte: 2 },
-        created: { $gte: today.toDate(), $lt: tomorrow.toDate() }  // lt - less than
-
-        }) // gte - gtreter than equal
+      const top = await Post.find({
+        totalLikes: { $gte: 2 },
+        created: { $gte: today.toDate(), $lt: tomorrow.toDate() }, // lt - less than
+      }) // gte - gtreter than equal
         .populate("user")
         .sort({ created: -1 });
 
-        const user = await User.findOne({_id: req.user._id});
-        if(!user.city && !user.country) {
-            request('http://geolocation-db.com/json/', {json: true}, async (err, res, body) => {
-                // console.log(body);
-                await User.update({
-                    _id: req.user._id
-                },
-                {
-                    city: body.city,
-                    country: body.country_name
-                })
-            })
-        }
+      const user = await User.findOne({ _id: req.user._id });
+      if (!user.city && !user.country) {
+        request(
+          "http://geolocation-db.com/json/",
+          { json: true },
+          async (err, res, body) => {
+            // console.log(body);
+            await User.update(
+              {
+                _id: req.user._id,
+              },
+              {
+                city: body.city,
+                country: body.country_name,
+              }
+            );
+          }
+        );
+      }
 
       return res.status(200).json({ message: "All posts", posts, top });
     } catch (err) {
@@ -193,4 +199,52 @@ module.exports = {
         res.status(404).json({ message: "Post Not Found", post })
       );
   },
+
+  // EditPost
+  EditPost(req, res) {
+    const schema = Joi.object().keys({
+      post: Joi.string().required(),
+      id: Joi.string().optional(),
+    });
+    let { error } = schema.validate(req.body);
+    if (error && error.details) {
+      return res.status(500).json({ msg: error.details });
+    }
+    const body = {
+      post: req.body.post,
+      created: new Date(),
+    };
+
+    Post.findOneAndUpdate({ _id: req.body.id }, body, { new: true })
+      .then((post) => {
+        res.status(200).json({ message: "Post updated successfully", post });
+      })
+      .catch((err) => {
+        return res.status(403).json({ message: "Not Updated", err });
+      });
+  },
+  // DeletePost
+  async DeletePost(req, res){
+    try {
+      const {id} = req.params;
+      const result = await Post.findByIdAndRemove(id);
+      console.log(result);
+      if(!result) {
+        return res.status(404).json({message: 'Could not delete post'})
+      } else {
+        await User.updateOne({
+          _id: req.user._id,
+        }, {
+          $pull: {
+            posts: {
+              postId: result._id,
+            }
+          }
+        });
+        return res.status(200).json({message: 'Post deleted successfully', result})
+      }
+    } catch (error) {
+      return res.status(403).json({ message: error });
+    }
+  }
 };
