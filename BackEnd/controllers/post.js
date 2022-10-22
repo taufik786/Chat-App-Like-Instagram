@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Joi = require("joi");
 const cloudinary = require("cloudinary");
 const moment = require("moment");

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cloudinary = require("cloudinary");
 const User = require("../models/userModel");
 
